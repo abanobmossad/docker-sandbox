@@ -9,7 +9,7 @@ services:
     ports:
       - "5432:5432"
   server:
-    image: stripe-example-multi-stage
+    build: .
     command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; npm start'
     depends_on:
       - db
