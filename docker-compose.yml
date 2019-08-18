@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: 8520
+      POSTGRES_USER: postgres
+      POSTGRES_DB: docker
+    ports:
+      - "5432:5432"
+  server:
+    image: stripe-example-multi-stage
+    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; npm start'
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
